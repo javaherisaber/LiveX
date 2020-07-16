@@ -3,6 +3,8 @@
 
 Collection of LiveData extensions for android
 
+<img src="img/screenshot.png" width="306" height="515">
+
 # Dependency
 Top level build.gradle
 ```groovy

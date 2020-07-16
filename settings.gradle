@@ -1,0 +1,3 @@
+include ':livex'
+include ':app'
+rootProject.name = "LiveX"

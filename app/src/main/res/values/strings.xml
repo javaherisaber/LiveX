@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">LiveX</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next fragment</string>
+    <string name="previous">Previous fragment</string>
+
+    <string name="liveData_label">LiveData = %1$s</string>
+    <string name="liveEvent_label">LiveEvent = %1$s</string>
+    <string name="oneShotLiveEvent_label">OneShotLiveEvent = %1$s</string>
+    <string name="singleLiveEvent_label">SingleLiveEvent = %1$s</string>
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+</resources>
