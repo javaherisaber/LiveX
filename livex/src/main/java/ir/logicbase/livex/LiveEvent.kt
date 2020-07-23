@@ -60,15 +60,4 @@ open class LiveEvent<T> : MediatorLiveData<T>() {
             pending = true
         }
     }
-
-    companion object {
-
-        /**
-         * Used for cases where [T] is [Unit], to make calls cleaner.
-         */
-        @MainThread
-        fun LiveEvent<Unit>.call() {
-            this.value = Unit
-        }
-    }
 }

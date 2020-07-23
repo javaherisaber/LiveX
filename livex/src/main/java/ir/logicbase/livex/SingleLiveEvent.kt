@@ -40,13 +40,5 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
 
     companion object {
         private const val TAG = "SingleLiveEvent"
-
-        /**
-         * Used for cases where [T] is [Unit], to make calls cleaner.
-         */
-        @MainThread
-        fun SingleLiveEvent<Unit>.call() {
-            this.value = Unit
-        }
     }
 }

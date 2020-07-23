@@ -17,7 +17,7 @@ class OneShotLiveEvent<T> : MediatorLiveData<T>() {
         if (::observerWrapper.isInitialized && observerWrapper.isRegistered) {
             throw IllegalStateException("Only one observer can be registered")
         }
-        observerWrapper = ObserverWrapper(owner, observer)
+        observerWrapper = ObserverWrapper(observer)
         observerWrapper.isRegistered = true
         super.observe(owner, observerWrapper)
     }
@@ -39,7 +39,7 @@ class OneShotLiveEvent<T> : MediatorLiveData<T>() {
         super.setValue(t)
     }
 
-    private class ObserverWrapper<T>(val owner: LifecycleOwner, val observer: Observer<T>) : Observer<T> {
+    private class ObserverWrapper<T>(val observer: Observer<T>) : Observer<T> {
 
         var isRegistered = false
         private var pending = false
@@ -53,17 +53,6 @@ class OneShotLiveEvent<T> : MediatorLiveData<T>() {
 
         fun newValue() {
             pending = true
-        }
-    }
-
-    companion object {
-
-        /**
-         * Used for cases where [T] is [Unit], to make calls cleaner.
-         */
-        @MainThread
-        fun OneShotLiveEvent<Unit>.call() {
-            this.value = Unit
         }
     }
 }
