@@ -1,7 +1,7 @@
 [![](https://jitpack.io/v/javaherisaber/LiveX.svg)](https://jitpack.io/#javaherisaber/LiveX)
 # LiveX
 
-Collection of LiveData extensions for android to better handle event drivent tasks
+Collection of LiveData extensions for android to better handle event driven tasks
 
 LiveData     |    LiveEvent   |   OneShotLiveEvent   |   SingleLiveEvent   
 :-----------:|:--------------:|:--------------------:|:--------------------:
