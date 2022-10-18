@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 class OneShotLiveEvent<T> : MediatorLiveData<T>() {
 
     private lateinit var observerWrapper: ObserverWrapper<in T>
+    private var lastValue: T? = null
+    private var hasAwaitingValue: Boolean = false
 
     @MainThread
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
@@ -19,6 +21,10 @@ class OneShotLiveEvent<T> : MediatorLiveData<T>() {
         }
         observerWrapper = ObserverWrapper(observer)
         observerWrapper.isRegistered = true
+        if (hasAwaitingValue) {
+            this.value = lastValue
+            hasAwaitingValue = false
+        }
         super.observe(owner, observerWrapper)
     }
 
@@ -33,7 +39,9 @@ class OneShotLiveEvent<T> : MediatorLiveData<T>() {
     @MainThread
     override fun setValue(t: T?) {
         if (!::observerWrapper.isInitialized) {
-            throw IllegalStateException("Before triggering event you must have one registered observer in view layer")
+            lastValue = t
+            hasAwaitingValue = true
+            return
         }
         observerWrapper.newValue()
         super.setValue(t)

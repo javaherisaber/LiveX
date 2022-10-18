@@ -11,11 +11,20 @@ import androidx.lifecycle.Observer
 open class LiveEvent<T> : MediatorLiveData<T>() {
 
     private val observers = hashSetOf<ObserverWrapper<in T>>()
+    private var lastValue: T? = null
+    private var hasAwaitingValue: Boolean = false
 
     @MainThread
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
         val wrapper = ObserverWrapper(observer)
-        observers.add(wrapper)
+        if (hasAwaitingValue && observers.none { it.observer == observer }) {
+            observers.add(wrapper)
+            this.value = lastValue
+            lastValue = null
+            hasAwaitingValue = false
+        } else {
+            observers.add(wrapper)
+        }
         super.observe(owner, wrapper)
     }
 
@@ -39,7 +48,8 @@ open class LiveEvent<T> : MediatorLiveData<T>() {
     @MainThread
     override fun setValue(t: T?) {
         if (observers.isEmpty()) {
-            throw IllegalStateException("Before triggering event make sure your observers are registered in view layer")
+            lastValue = t
+            hasAwaitingValue = true
         }
         observers.forEach { it.newValue() }
         super.setValue(t)
