@@ -47,6 +47,9 @@ open class LiveEvent<T> : MediatorLiveData<T>() {
 
     @MainThread
     override fun setValue(t: T?) {
+        if (observers.isEmpty() && LiveX.noLateObserveAllowed) {
+            throw IllegalStateException("Before triggering event make sure your observers are registered in view layer")
+        }
         if (observers.isEmpty()) {
             lastValue = t
             hasAwaitingValue = true

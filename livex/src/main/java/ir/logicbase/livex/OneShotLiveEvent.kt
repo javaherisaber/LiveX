@@ -23,6 +23,7 @@ class OneShotLiveEvent<T> : MediatorLiveData<T>() {
         observerWrapper.isRegistered = true
         if (hasAwaitingValue) {
             this.value = lastValue
+            lastValue = null
             hasAwaitingValue = false
         }
         super.observe(owner, observerWrapper)
@@ -38,6 +39,9 @@ class OneShotLiveEvent<T> : MediatorLiveData<T>() {
 
     @MainThread
     override fun setValue(t: T?) {
+        if (!::observerWrapper.isInitialized && LiveX.noLateObserveAllowed) {
+            throw IllegalStateException("Before triggering event you must have one registered observer in view layer")
+        }
         if (!::observerWrapper.isInitialized) {
             lastValue = t
             hasAwaitingValue = true
