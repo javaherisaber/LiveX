@@ -42,7 +42,7 @@ class OneShotLiveEvent<T> : MediatorLiveData<T>() {
         if (!::observerWrapper.isInitialized && LiveX.noLateObserveAllowed) {
             throw IllegalStateException("Before triggering event you must have one registered observer in view layer")
         }
-        if (!::observerWrapper.isInitialized) {
+        if (!::observerWrapper.isInitialized || (::observerWrapper.isInitialized && !observerWrapper.isRegistered)) {
             lastValue = t
             hasAwaitingValue = true
             return
