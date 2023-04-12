@@ -14,3 +14,10 @@ object LiveX {
 fun MutableLiveData<Unit>.call() {
     this.value = Unit
 }
+
+/**
+ * Used for cases where type is [Unit] and is being called from background thread
+ */
+fun MutableLiveData<Unit>.postCall() {
+    this.postValue(Unit)
+}
